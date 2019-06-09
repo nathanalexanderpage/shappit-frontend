@@ -9,7 +9,7 @@ input[type="radio"] {
 	width: 2vw;
 	height: 2vw;
 }
-input[type="submit"] {
+input[type="submit"], button {
 	font-size: 3vw;
 }
 select {

@@ -56,6 +56,16 @@
           </div>
         {% endif %}
       </div>
+      {% if permissions_level == 'employee' %}
+        <div class="top seg new-shipment">
+          <div class="top title">
+            New Shipment
+          </div>
+          <div class="top subseg new-shipment">
+            <input type="submit" name="submit" value="New Shipment">
+          </div>
+        </div>
+      {% endif %}
 
 
     </main>
