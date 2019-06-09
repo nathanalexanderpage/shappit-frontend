@@ -4,21 +4,60 @@
   <head>
     <meta charset="utf-8">
     <title>{{site_company}}: Top</title>
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'reset.css' %}"> -->
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
   </head>
   <body>
     <header>
-      <h1>{{site_company}}</h1>
-      <h2>Top</h2>
+      <h1>{{ site_company }}</h1>
     </header>
     <main>
-      <p>Some body text.</p>
+      {% if permissions_level == 'employee' %}
+        <h3>Employee landing</h3>
+      {% elif permissions_level == 'customer' %}
+        <h3>Customer landing</h3>
+      {% endif %}
       <hr />
-      {% for cat in cats %}
-        <p>Name: {{ cat.name }}</p>
-      	<p>Age: {{ cat.age }}</p>
-      	<hr />
-      {% endfor %}
+      <div class="top seg search">
+        <div class="top title">
+          Search Shipments
+        </div>
+        <div class="top subseg by-pro search">
+          <form class="" action="index.html" method="post">
+            <label for="pro">By shipment #</label>
+            <input class="code nine" type="text" name="pro" placeholder="123456789">
+            <input type="submit" name="submit" value="Search">
+          </form>
+        </div>
+        {% if customers_list %}
+          <div class="top subseg by-cust search">
+            <form action="index.html" method="get">
+              <div class="">
+                <label for="cust-select">By customer:</label>
+                <select name="cust-name">
+                  {% for customer in customers_list %}
+                    <option value="{{ customer.id }}">{{ customer.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="">
+                <label for="cust-role">As:</label>
+                <input type="radio" name="cust-role" value="shipper">
+                <label for="shipper">shipper</label>
+                <input type="radio" name="cust-role" value="consignee">
+                <label for="consignee">consignee</label>
+                <input type="radio" name="cust-role" value="bill-to">
+                <label for="bill-to">bill-to</label>
+              </div>
+              <div class="">
+                <input type="submit" name="submit" value="Search">
+              </div>
+            </form>
+          </div>
+        {% endif %}
+      </div>
+
+
     </main>
     <footer>
       &copy;footerauthority
