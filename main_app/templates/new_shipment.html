@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}: New Shipment{% endblock %}
+
+{% block alert %}
+  {% if alerts %}
+    {% for alert in alerts %}
+      <div class="alert-banner {{ alert.format }}">
+        {{ alert.tag }}: {{ alert.content }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% if permissions_level == 'employee' %}
+    <h3 class="page-title">New shipment</h3>
+    <hr />
+    <div class="seg">
+      <form action="new_submit" method="post">
+        <div class="">
+          <fieldset>
+            <div class="subseg">
+              <label for="origin">Origin</label>
+              <select class="" name="origin">
+                <option value="" selected disabled hidden>---</option>
+                {% for sc in shipment_detail_fields.serv_cent_serializer %}
+                  <option value="{{ sc.id }}">{{ sc.code }} ({{ sc.name }})</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="subseg">
+              <label for="destination">Destination</label>
+              <select class="" name="destination">
+                <option value="" selected disabled hidden>---</option>
+                {% for sc in shipment_detail_fields.serv_cent_serializer %}
+                  <option value="{{ sc.id }}">{{ sc.code }} ({{ sc.name }})</option>
+                {% endfor %}
+              </select>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="">
+          <fieldset>
+            <div class="subseg">
+              <label for="shipper">Shipper</label>
+              <select class="" name="shipper">
+                <option value="" selected disabled hidden>-----</option>
+                {% for cust in shipment_detail_fields.cust_serializer %}
+                  <option value="{{ cust.id }}">{{ cust.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="subseg">
+              <label for="consignee">Consignee</label>
+              <select class="" name="consignee">
+                <option value="" selected disabled hidden>-----</option>
+                {% for cust in shipment_detail_fields.cust_serializer %}
+                  <option value="{{ cust.id }}">{{ cust.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="subseg">
+              <label for="billto">Bill-To</label>
+              <select class="" name="billto">
+                <option value="" selected disabled hidden>-----</option>
+                {% for cust in shipment_detail_fields.cust_serializer %}
+                  <option value="{{ cust.id }}">{{ cust.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </fieldset>
+        </div>
+        <div class="">
+          <fieldset>
+            <div class="subseg">
+              <label for="equipment">Equipment</label>
+              <select class="" name="equipment">
+                <option value="" selected disabled hidden>-----</option>
+                {% for eqt in shipment_detail_fields.eqt_serializer %}
+                  <option value="{{ eqt.no }}">{{ eqt.no }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="subseg">
+              <textarea name="name" placeholder="description of contents" maxlength="255"></textarea>
+            </div>
+          </fieldset>
+        </div>
+        <div class="">
+          <input type="submit" name="submit" value="Create">
+        </div>
+      </form>
+    </div>
+  {% endif %}
+{% endblock %}

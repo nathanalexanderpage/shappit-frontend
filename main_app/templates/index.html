@@ -1,76 +1,61 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>{{site_company}}: Top</title>
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'reset.css' %}"> -->
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
-  </head>
-  <body>
-    <header>
-      <h1>{{ site_company }}</h1>
-    </header>
-    <main>
-      {% if permissions_level == 'employee' %}
-        <h3>Employee landing</h3>
-      {% elif permissions_level == 'customer' %}
-        <h3>Customer landing</h3>
-      {% endif %}
-      <hr />
-      <div class="top seg search">
-        <div class="top title">
-          Search Shipments
-        </div>
-        <div class="top subseg by-pro search">
-          <form class="" action="index.html" method="post">
-            <label for="pro">By shipment #</label>
-            <input class="code nine" type="text" name="pro" placeholder="123456789">
+{% extends "base.html" %}
+{% block title %}: Top{% endblock %}
+
+{% block content %}
+  {% if permissions_level == 'employee' %}
+    <h3 class="page-title">Employee landing</h3>
+  {% elif permissions_level == 'customer' %}
+    <h3 class="page-title">Customer landing</h3>
+  {% endif %}
+  <hr />
+  <div class="top seg search">
+    <div class="top title">
+      Search Shipments
+    </div>
+    <div class="top subseg by-pro search">
+      <form class="" action="index.html" method="post">
+        <label for="pro">By shipment # </label>
+        <input class="code nine" type="text" name="pro" placeholder="123456789">
+        <input type="submit" name="submit" value="Search">
+      </form>
+    </div>
+    {% if customers_list %}
+      <div class="top subseg by-cust search">
+        <form action="index.html" method="get">
+          <div class="">
+            <label for="cust-select">By customer:</label>
+            <select name="cust-name">
+              {% for customer in customers_list %}
+                <option value="{{ customer.id }}">{{ customer.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="">
+            <label for="cust-role">As:</label>
+            <input type="radio" name="cust-role" value="shipper">
+            <label for="shipper">shipper</label>
+            <input type="radio" name="cust-role" value="consignee">
+            <label for="consignee">consignee</label>
+            <input type="radio" name="cust-role" value="bill-to">
+            <label for="bill-to">bill-to</label>
+          </div>
+          <div class="">
             <input type="submit" name="submit" value="Search">
-          </form>
-        </div>
-        {% if customers_list %}
-          <div class="top subseg by-cust search">
-            <form action="index.html" method="get">
-              <div class="">
-                <label for="cust-select">By customer:</label>
-                <select name="cust-name">
-                  {% for customer in customers_list %}
-                    <option value="{{ customer.id }}">{{ customer.name }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-              <div class="">
-                <label for="cust-role">As:</label>
-                <input type="radio" name="cust-role" value="shipper">
-                <label for="shipper">shipper</label>
-                <input type="radio" name="cust-role" value="consignee">
-                <label for="consignee">consignee</label>
-                <input type="radio" name="cust-role" value="bill-to">
-                <label for="bill-to">bill-to</label>
-              </div>
-              <div class="">
-                <input type="submit" name="submit" value="Search">
-              </div>
-            </form>
           </div>
-        {% endif %}
+        </form>
       </div>
-      {% if permissions_level == 'employee' %}
-        <div class="top seg new-shipment">
-          <div class="top title">
-            New Shipment
-          </div>
-          <div class="top subseg new-shipment">
-            <input type="submit" name="submit" value="New Shipment">
-          </div>
-        </div>
-      {% endif %}
-
-
-    </main>
-    <footer>
-      &copy;footerauthority
-    </footer>
-  </body>
-</html>
+    {% endif %}
+  </div>
+  {% if permissions_level == 'employee' %}
+    <div class="top seg new-shipment">
+      <div class="top title">
+        New Shipment
+      </div>
+      <div class="top subseg new-shipment">
+        <form action="new">
+          <input type="submit" name="submit" value="New Shipment">
+        </form>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

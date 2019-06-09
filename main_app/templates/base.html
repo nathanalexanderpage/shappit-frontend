@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{{site_company}}{% block title %}{% endblock %}</title>
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'reset.css' %}"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+  </head>
+  <body>
+    <header>
+        <h1><a href="/">{{ site_company }}</a>{% block headercontent %}{% endblock %}</h1>
+    </header>
+    <main>
+      {% block alert %}
+      {% endblock %}
+      {% block content %}
+        <h4>It appears the content for this page was not found.</h4>
+      {% endblock %}
+    </main>
+    <footer>
+      &copy;footerauthority
+    </footer>
+  </body>
+</html>
