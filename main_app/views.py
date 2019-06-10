@@ -42,6 +42,23 @@ def index(request):
         {'site_company': site_company}
     )
 
+# SEARCH
+def search(request):
+    decoded = request.body
+    pprint(decoded)
+    shipment_detail_fields = requests.get(f'{API_URL}/new_shipment_info').json()
+    if shipment_detail_fields:
+        return render(
+            request,
+            'new_shipment.html',
+            {
+                'site_company': site_company,
+                'permissions_level': user_permissions,
+                'shipment_detail_fields': shipment_detail_fields
+            }
+        )
+
+
 # NEW SHIPMENT
 def new_shipment(request):
     shipment_detail_fields = requests.get(f'{API_URL}/new_shipment_info').json()
@@ -114,7 +131,19 @@ def new_shipment_submit(request):
 
 def spec_shipment(request, shipment_id):
     shipment_details = requests.get(f'{API_URL}/shipment/{shipment_id}').json()
+    detail_keys = requests.get(f'{API_URL}/new_shipment_info').json()
     print(shipment_details)
+    print('detail_keys')
+    pprint(detail_keys)
+    print('detail_keys[cust_serializer]')
+    pprint(detail_keys['cust_serializer'])
+    loc_list = detail_keys['serv_cent_serializer']
+    pro_origin = [loc for loc in loc_list if loc['id'] in [shipment_details['origin']]]
+    pro_destination = [loc for loc in loc_list if loc['id'] in [shipment_details['destination']]]
+    cust_list = detail_keys['cust_serializer']
+    pro_shipper = [cust for cust in cust_list if cust['id'] in [shipment_details['shipper']]]
+    pro_consignee = [cust for cust in cust_list if cust['id'] in [shipment_details['consignee']]]
+    pro_billto = [cust for cust in cust_list if cust['id'] in [shipment_details['billto']]]
     if shipment_details:
         return render(
             request,
@@ -122,7 +151,13 @@ def spec_shipment(request, shipment_id):
             {
                 'site_company': site_company,
                 'permissions_level': user_permissions,
-                'pro': shipment_details
+                'pro': shipment_details,
+                'keys': detail_keys,
+                'pro_origin': pro_origin[0],
+                'pro_destination': pro_destination[0],
+                'pro_shipper': pro_shipper[0],
+                'pro_consignee': pro_consignee[0],
+                'pro_billto': pro_billto[0]
             }
         )
     return render(

@@ -5,13 +5,13 @@
   <h2>Details Record: Shipment #{{ pro.id }}</h2>
   <div class="seg">
     <div class="subseg">
-      <p>Origin: {{ pro.origin }}</p>
-      <p>Destination: {{ pro.destination }}</p>
+      <p>Origin: {{ pro_origin.code }} ({{ pro_origin.name }})</p>
+      <p>Destination: {{ pro_destination.code }} ({{ pro_destination.name }})</p>
     </div>
     <div class="subseg">
-      <p>Origin: {{ pro.shipper }}</p>
-      <p>Destination: {{ pro.consignee }}</p>
-      <p>Bill-To: {{ pro.billto }}</p>
+      <p>Shipper: {{ pro_shipper.name }}</p>
+      <p>Consignee: {{ pro_consignee.name }}</p>
+      <p>Bill-To: {{ pro_billto.name }}</p>
     </div>
     <div class="subseg">
       <p>Equipment# {{ pro.equipment }}</p>

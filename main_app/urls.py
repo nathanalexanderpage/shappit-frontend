@@ -4,7 +4,7 @@ from .views import redirect_view
 
 urlpatterns = [
 	path('', views.index, name='index'),
-	path('search', views.index, name='index'),
+	path('search?<str:parameters>', views.search, name='search'),
 	path('new', views.new_shipment, name='new_shipment'),
 	path('new_shipment_submit', views.new_shipment_submit, name='new_shipment_submit'),
 	path('redirect', redirect_view),
