@@ -2,20 +2,29 @@
 {% block title %}: Shipment Details - #{{ pro.id }}{% endblock %}
 
 {% block content %}
-  <h2>Details Record: Shipment #{{ pro.id }}</h2>
-  <div class="seg">
-    <div class="subseg">
-      <p>Origin: {{ pro_origin.code }} ({{ pro_origin.name }})</p>
-      <p>Destination: {{ pro_destination.code }} ({{ pro_destination.name }})</p>
+  {% if pro %}
+    <h2>Details Record: Shipment #{{ pro.id }}</h2>
+    <div class="seg">
+      <div class="subseg">
+        <p>Origin: {{ pro_origin.code }} ({{ pro_origin.name }})</p>
+        <p>Destination: {{ pro_destination.code }} ({{ pro_destination.name }})</p>
+      </div>
+      <div class="subseg">
+        <p>Shipper: {{ pro_shipper.name }}</p>
+        <p>Consignee: {{ pro_consignee.name }}</p>
+        <p>Bill-To: {{ pro_billto.name }}</p>
+      </div>
+      <div class="subseg">
+        <p>Equipment# {{ pro.equipment }}</p>
+        <p>Commodities: {{ pro.desc }}</p>
+      </div>
     </div>
-    <div class="subseg">
-      <p>Shipper: {{ pro_shipper.name }}</p>
-      <p>Consignee: {{ pro_consignee.name }}</p>
-      <p>Bill-To: {{ pro_billto.name }}</p>
+  {% else %}
+    <div class="seg">
+      <div class="subseg">
+        <p>Looks like the shipment you were looking for doesn't exist -- YET</p>
+      </div>
+
     </div>
-    <div class="subseg">
-      <p>Equipment# {{ pro.equipment }}</p>
-      <p>Commodities: {{ pro.desc }}</p>
-    </div>
-  </div>
+  {% endif %}
 {% endblock %}

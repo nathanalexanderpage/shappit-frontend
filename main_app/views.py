@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import requests
 from pprint import pprint
+import json
 
 API_URL = 'http://localhost:8000'
 site_company = 'Shappit﹏'
@@ -44,20 +45,113 @@ def index(request):
 
 # SEARCH
 def search(request):
-    decoded = request.body
-    pprint(decoded)
-    shipment_detail_fields = requests.get(f'{API_URL}/new_shipment_info').json()
-    if shipment_detail_fields:
-        return render(
-            request,
-            'new_shipment.html',
-            {
-                'site_company': site_company,
-                'permissions_level': user_permissions,
-                'shipment_detail_fields': shipment_detail_fields
-            }
-        )
+    # print(request.body)
+    decoded = request.body.decode('utf-8')
+    # print(decoded)
+    key_val_pair = decoded.split('&')
+    # print(key_val_pair)
+    send_data = {}
+    for pair in key_val_pair:
+        key_val_list = pair.split('=')
+        # print(key_val_list)
+        # print(key_val_list[0])
+        key = key_val_list[0]
+        # print(key_val_list[1])
+        val = key_val_list[1]
+        try:
+            val = int(key_val_list[1])
+        except:
+            pass
+        send_data.update({key:val})
+    pprint(send_data)
+    try:
+        cust_no = send_data['cust-name']
+    except:
+        response = redirect(f'/')
+        return response
+    pprint(cust_no)
+    if send_data['by'] == 'pro':
+        ext = send_data['pro']
+        response = redirect(f'/shipments/{ext}')
+        return response
+        if shipment_detail_fields:
+            return render(
+                request,
+                'new_shipment.html',
+                {
+                    'site_company': site_company,
+                    'permissions_level': user_permissions,
+                    'shipment_detail_fields': shipment_detail_fields
+                }
+            )
+    elif send_data['by'] == 'shipper':
+        print('shipper search')
+        cust_details = requests.get(f'{API_URL}/customer/{cust_no}/shipper/shipments').json()
+        # print(cust_details)
+        pprint(cust_details)
+        pprint(cust_details[0])
+        data = json.loads(cust_details)
+        pprint(data)
+        pprint(data[0])
 
+        if cust_details:
+            # remove if time crunch
+            # pprint(cust_details)
+            return render(
+                request,
+                'ship_by_cust.html',
+                {
+                    'site_company': site_company,
+                    'permissions_level': user_permissions,
+                    'shipments': data,
+                }
+            )
+    elif send_data['by'] == 'consignee':
+        print('consignee search')
+        cust_details = requests.get(f'{API_URL}/customer/{cust_no}/consignee/shipments').json()
+        # print(cust_details)
+        pprint(cust_details)
+        pprint(cust_details[0])
+        data = json.loads(cust_details)
+        pprint(data)
+        pprint(data[0])
+
+        if cust_details:
+            # remove if time crunch
+            # pprint(cust_details)
+            return render(
+                request,
+                'ship_by_cust.html',
+                {
+                    'site_company': site_company,
+                    'permissions_level': user_permissions,
+                    'shipments': data,
+                }
+            )
+    elif send_data['by'] == 'billto':
+        print('billto search')
+        cust_details = requests.get(f'{API_URL}/customer/{cust_no}/billto/shipments').json()
+        # print(cust_details)
+        pprint(cust_details)
+        pprint(cust_details[0])
+        data = json.loads(cust_details)
+        pprint(data)
+        pprint(data[0])
+
+        if cust_details:
+            # remove if time crunch
+            # pprint(cust_details)
+            return render(
+                request,
+                'ship_by_cust.html',
+                {
+                    'site_company': site_company,
+                    'permissions_level': user_permissions,
+                    'shipments': data,
+                }
+            )
+    response = redirect(f'/')
+    return response
 
 # NEW SHIPMENT
 def new_shipment(request):
@@ -130,8 +224,26 @@ def new_shipment_submit(request):
         return response
 
 def spec_shipment(request, shipment_id):
-    shipment_details = requests.get(f'{API_URL}/shipment/{shipment_id}').json()
-    detail_keys = requests.get(f'{API_URL}/new_shipment_info').json()
+    try:
+        shipment_id = int(shipment_id)
+    except:
+        response = redirect(f'/')
+        return response
+    if shipment_id < 1:
+        response = redirect(f'/')
+        return response
+    try:
+        shipment_details = requests.get(f'{API_URL}/shipment/{shipment_id}').json()
+        detail_keys = requests.get(f'{API_URL}/new_shipment_info').json()
+    except:
+        return render(
+            request,
+            'spec_shipment.html',
+            {
+                'site_company': site_company,
+                'permissions_level': user_permissions,
+            }
+        )
     print(shipment_details)
     print('detail_keys')
     pprint(detail_keys)
