@@ -2,6 +2,7 @@
 {% block title %}: Shipments for {{ cust.name }}{% endblock %}
 
 {% block content %}
+  <h2>Search results: by {{ searchtype }}</h2>
   {% if shipments %}
     <div class="seg">
       {% for ship in shipments %}

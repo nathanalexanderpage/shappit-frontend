@@ -104,6 +104,7 @@ def search(request):
                     'site_company': site_company,
                     'permissions_level': user_permissions,
                     'shipments': data,
+                    'searchtype': 'shipper'
                 }
             )
     elif send_data['by'] == 'consignee':
@@ -126,6 +127,7 @@ def search(request):
                     'site_company': site_company,
                     'permissions_level': user_permissions,
                     'shipments': data,
+                    'searchtype': 'consignee'
                 }
             )
     elif send_data['by'] == 'billto':
@@ -148,6 +150,7 @@ def search(request):
                     'site_company': site_company,
                     'permissions_level': user_permissions,
                     'shipments': data,
+                    'searchtype': 'bill-to'
                 }
             )
     response = redirect(f'/')
