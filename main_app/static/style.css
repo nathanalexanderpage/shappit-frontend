@@ -1,19 +1,38 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: skyblue;
+}
+fieldset {
+	width: inherit;
+}
 footer {
 	font-size: 3vw;
 }
 h1 {
+	margin: 0;
+	background-color: #153d63;
 	font-size: 7vw;
+	font-family: "Arial Black", "Gadget", sans-serif;
+}
+h1 > a:hover, h1 > a:visited, h1 > a:link, h1 > a:active {
+	text-decoration: none;
+	color: white;
 }
 h2 {
 	font-size: 5vw;
 	font-weight: bold;
-	color: hotpink;
 }
 h3 {
-	font-size: 4vw;
+	font-size: 4.5vw;
 }
 h4 {
-	font-size: 3vw;
+	font-size: 4vw;
+	margin: 0;
+}
+html {
+	margin: 0;
+	padding: 0;
 }
 label {
 	font-size: 3vw;
@@ -25,15 +44,18 @@ input[type="radio"] {
 input[type="submit"], button {
 	font-size: 3vw;
 }
+p {
+	font-size: 3.5vw;
+}
 select {
 	font-size: 3vw;
 }
 textarea {
-	max-width: 87vw;
+	max-width: 75vw;
 	max-height: 30vw;
-	min-width: 87vw;
+	min-width: 60vw;
 	min-height: 8vw;
-	width: 87vw;
+	width: 75vw;
 	height: 15vw;
 	font-size: 2.8vw;
 }

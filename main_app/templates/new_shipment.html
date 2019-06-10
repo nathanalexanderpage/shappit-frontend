@@ -1,22 +1,22 @@
 {% extends "base.html" %}
 {% block title %}: New Shipment{% endblock %}
 
-{% block alert %}
-  {% if alerts %}
-    {% for alert in alerts %}
-      <div class="alert-banner {{ alert.format }}">
-        {{ alert.tag }}: {{ alert.content }}
-      </div>
-    {% endfor %}
-  {% endif %}
-{% endblock %}
+
+{% if alerts %}
+  {% for alert in alerts %}
+    <div class="alert-banner {{ alert.format }}">
+      {{ alert.tag }}: {{ alert.content }}
+    </div>
+  {% endfor %}
+{% endif %}
+
 
 {% block content %}
   {% if permissions_level == 'employee' %}
     <h3 class="page-title">New shipment</h3>
     <hr />
     <div class="seg">
-      <form action="new_submit" method="post">
+      <form action="new_shipment_submit" method="POST">{% csrf_token %}
         <div class="">
           <fieldset>
             <div class="subseg">
@@ -72,7 +72,6 @@
           </fieldset>
         </div>
         <div class="">
-          <fieldset>
             <div class="subseg">
               <label for="equipment">Equipment</label>
               <select class="" name="equipment">
@@ -83,9 +82,8 @@
               </select>
             </div>
             <div class="subseg">
-              <textarea name="name" placeholder="description of contents" maxlength="255"></textarea>
+              <textarea name="desc" placeholder="description of contents" maxlength="255"></textarea>
             </div>
-          </fieldset>
         </div>
         <div class="">
           <input type="submit" name="submit" value="Create">

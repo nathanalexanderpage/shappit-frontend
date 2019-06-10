@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}: Shipment Details - #{{ pro.id }}{% endblock %}
+
+{% block content %}
+  <h2>Details Record: Shipment #{{ pro.id }}</h2>
+  <div class="seg">
+    <div class="subseg">
+      <p>Origin: {{ pro.origin }}</p>
+      <p>Destination: {{ pro.destination }}</p>
+    </div>
+    <div class="subseg">
+      <p>Origin: {{ pro.shipper }}</p>
+      <p>Destination: {{ pro.consignee }}</p>
+      <p>Bill-To: {{ pro.billto }}</p>
+    </div>
+    <div class="subseg">
+      <p>Equipment# {{ pro.equipment }}</p>
+      <p>Commodities: {{ pro.desc }}</p>
+    </div>
+  </div>
+{% endblock %}
