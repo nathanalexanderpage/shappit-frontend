@@ -4,7 +4,9 @@ import requests
 from pprint import pprint
 import json
 
-API_URL = 'http://localhost:8000'
+DEV_URL = 'http://localhost:8000'
+PRODUCTION_URL = 'shappit-backend.herokuapp.com'
+API_URL = PRODUCTION_URL
 site_company = 'Shappit﹏'
 test_user_permissions = 'employee'
 user_permissions = test_user_permissions
