@@ -5,7 +5,7 @@ from pprint import pprint
 import json
 
 DEV_URL = 'http://localhost:8000'
-PRODUCTION_URL = 'shappit-backend.herokuapp.com'
+PRODUCTION_URL = 'http://shappit-backend.herokuapp.com'
 API_URL = PRODUCTION_URL
 site_company = 'Shappit﹏'
 test_user_permissions = 'employee'
@@ -94,11 +94,9 @@ def search(request):
         pprint(cust_details[0])
         data = json.loads(cust_details)
         pprint(data)
-        pprint(data[0])
-
-        if cust_details:
-            # remove if time crunch
-            # pprint(cust_details)
+        pprint(data)
+        try:
+            print(data[0])
             return render(
                 request,
                 'ship_by_cust.html',
@@ -109,6 +107,8 @@ def search(request):
                     'searchtype': 'shipper'
                 }
             )
+        except:
+            pass
     elif send_data['by'] == 'consignee':
         print('consignee search')
         cust_details = requests.get(f'{API_URL}/customer/{cust_no}/consignee/shipments').json()
@@ -117,11 +117,8 @@ def search(request):
         pprint(cust_details[0])
         data = json.loads(cust_details)
         pprint(data)
-        pprint(data[0])
-
-        if cust_details:
-            # remove if time crunch
-            # pprint(cust_details)
+        try:
+            print(data[0])
             return render(
                 request,
                 'ship_by_cust.html',
@@ -132,6 +129,8 @@ def search(request):
                     'searchtype': 'consignee'
                 }
             )
+        except:
+            pass
     elif send_data['by'] == 'billto':
         print('billto search')
         cust_details = requests.get(f'{API_URL}/customer/{cust_no}/billto/shipments').json()
@@ -140,11 +139,8 @@ def search(request):
         pprint(cust_details[0])
         data = json.loads(cust_details)
         pprint(data)
-        pprint(data[0])
-
-        if cust_details:
-            # remove if time crunch
-            # pprint(cust_details)
+        try:
+            print(data[0])
             return render(
                 request,
                 'ship_by_cust.html',
@@ -152,9 +148,11 @@ def search(request):
                     'site_company': site_company,
                     'permissions_level': user_permissions,
                     'shipments': data,
-                    'searchtype': 'bill-to'
+                    'searchtype': 'billto'
                 }
             )
+        except:
+            pass
     response = redirect(f'/')
     return response
 
