@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,7 +29,7 @@ DEBUG = False
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ALLOWED_HOSTS = [
-    'localhost'
+    'shappit.herokuapp.com'
 ]
 
 
@@ -80,12 +81,15 @@ TEMPLATES = [
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'shappit',
-#     }
-# }
+DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'shappit',
+    # }
+}
+DATABASES['default'] = dj_database_url.config(
+    default = 'postgres://gjplhbsooptlge:19e7f3449689ccd7504ec642e996c5b136529fec9ab0004b2341156f6b22946a@ec2-50-19-221-38.compute-1.amazonaws.com:5432/d6alr3d5mjfge7'
+)
 
 
 # Password validation
